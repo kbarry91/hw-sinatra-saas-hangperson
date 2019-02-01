@@ -10,11 +10,18 @@ class HangpersonGame
   
   def initialize(word)
     @word = word
+    @guesses = ''
+    @wrong_guesses = ''
   end
 
   # You can test it by running $ bundle exec irb -I. -r app.rb
   # And then in the irb: irb(main):001:0> HangpersonGame.get_random_word
   #  => "cooking"   <-- some random word
+  
+  attr_accessor :word
+  attr_accessor :guesses
+  attr_accessor :wrong_guesses
+
   def self.get_random_word
     require 'uri'
     require 'net/http'
@@ -23,5 +30,6 @@ class HangpersonGame
       return http.post(uri, "").body
     }
   end
-
+  
+  
 end
