@@ -19,13 +19,13 @@ describe HangpersonGame do
     end
   end
 
-  describe 'guessing', :pending => true do
+  describe 'guessing' do
     context 'correctly' do
       before :each do
         @game = HangpersonGame.new('garply')
         @valid = @game.guess('a')
       end
-      it 'changes correct guess list', :pending => true do
+      it 'changes correct guess list' do
         expect(@game.guesses).to eq('a')
         expect(@game.wrong_guesses).to eq('')
       end
