@@ -42,12 +42,7 @@ class HangpersonApp < Sinatra::Base
       if !@game.guess(letter)
          flash[:message] = "You have already used that letter."
       end
-      
-      #if @game.check_win_or_lose == :win
-      #    redirect '/win'
-      #elsif  @game.check_win_or_lose == :lose
-      #    redirect '/lose'
-      #end
+
     rescue ArgumentError => _
       # If a guess is invalid, set flash[:message] to "Invalid guess."
       flash[:message] = "Invalid guess."
@@ -88,7 +83,7 @@ class HangpersonApp < Sinatra::Base
       redirect '/show'
     end
     
-    erb :win # You may change/remove this line
+    erb :win
   end
   
   get '/lose' do
@@ -101,7 +96,7 @@ class HangpersonApp < Sinatra::Base
     if @game.check_win_or_lose == :play
       redirect '/show'
     end
-    erb :lose # You may change/remove this line
+    erb :lose 
   end
   
 end

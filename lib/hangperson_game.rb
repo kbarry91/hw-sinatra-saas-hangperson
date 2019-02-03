@@ -1,12 +1,13 @@
 class HangpersonGame
 
-  # add the necessary class methods, attributes, etc. here
-  # to make the tests in spec/hangperson_game_spec.rb pass.
-
-
-  # def initialize()
-  # end
+  # use attr_accessor to allow reading and writing of instance variables
+  attr_accessor :word
+  attr_accessor :guesses
+  attr_accessor :wrong_guesses
+  attr_accessor :word_with_guesses 
+  attr_accessor :check_win_or_lose
   
+  # Initialize game variables
   def initialize(word)
     @word = word
     @guesses = ''
@@ -18,18 +19,6 @@ class HangpersonGame
     end
     @check_win_or_lose = :play
   end
-
-  
-  
-  # You can test it by running $ bundle exec irb -I. -r app.rb
-  # And then in the irb: irb(main):001:0> HangpersonGame.get_random_word
-  #  => "cooking"   <-- some random word
-  
-  attr_accessor :word
-  attr_accessor :guesses
-  attr_accessor :wrong_guesses
-  attr_accessor :word_with_guesses 
-  attr_accessor :check_win_or_lose
   
   # Get a word from remote "random word" service
   def self.get_random_word
@@ -41,25 +30,31 @@ class HangpersonGame
     }
   end
   
-   # When a user makes a guess
+  # When a user makes a guess
   def guess(letter)
     #throw 'Error: Nil guess not allowed' if letter.nil?
-    #throw 'Error: Empty guess' if letter == ''
-    #throw 'Error: Guess not a letter' if !letter.match(/[a-zA-Z]/)
     raise ArgumentError if letter.nil?
+    
+    #throw 'Error: Empty guess' if letter == ''
     raise ArgumentError if letter == ''
+    
+    #throw 'Error: Guess not a letter' if !letter.match(/[a-zA-Z]/)
     raise ArgumentError if !letter.match(/[a-zA-Z]/)
 
-    
+    # Convert letter to lowercase
     letter.downcase!
     
+    # Check if letter is in word unless letter already guessed
     if word.include? letter
       unless guesses.include? letter
+        # Add letter to guess array
         guesses << letter
         
+        # Iterate through word
         for i in 0..word.length
           if word[i] == letter
             word_with_guesses[i] = letter
+            # If all - replaced set check_win_or_lose to win
             @check_win_or_lose = :win if !word_with_guesses.include? '-'
           end
         end
@@ -68,15 +63,19 @@ class HangpersonGame
       end
     else
       unless wrong_guesses.include? letter
+        # Add letter to wrong_guesses array
         wrong_guesses << letter
         
+        # If 7 wrong guesses entered
         if wrong_guesses.size >= 7
+          # Set check_win_or_lose to lose
           @check_win_or_lose = :lose
         end
         
         return true
       end
     end
+    # Word does not contain guessed letter return false
     return false
   end
   
