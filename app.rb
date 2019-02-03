@@ -43,11 +43,11 @@ class HangpersonApp < Sinatra::Base
          flash[:message] = "You have already used that letter."
       end
       
-      if @game.check_win_or_lose == :win
-          redirect '/win'
-      elsif  @game.check_win_or_lose == :lose
-          redirect '/lose'
-      end
+      #if @game.check_win_or_lose == :win
+      #    redirect '/win'
+      #elsif  @game.check_win_or_lose == :lose
+      #    redirect '/lose'
+      #end
     rescue ArgumentError => _
       # If a guess is invalid, set flash[:message] to "Invalid guess."
       flash[:message] = "Invalid guess."
@@ -61,8 +61,17 @@ class HangpersonApp < Sinatra::Base
   # Notice that the show.erb template expects to use the instance variables
   # wrong_guesses and word_with_guesses from @game.
   get '/show' do
-    ### YOUR CODE HERE ###
-    erb :show # You may change/remove this line
+    # Confirm current saved state of game. win, lose or play.
+    case @game.check_win_or_lose
+    when :win
+      # if the game state is win
+      redirect '/win'
+    when :lose
+      # if the game state is lose
+      redirect '/lose'
+    end
+    # Continue to next page
+    erb :show
   end
   
   get '/win' do

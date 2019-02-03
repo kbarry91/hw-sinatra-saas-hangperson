@@ -1,19 +1,25 @@
 <% if flash[:message] %>
-   <div class="alert alert-danger">
-     <span class="error"><%= flash[:message] %></span>
-   </div>
+  <div class="alert alert-danger">
+    <span class="error">
+      <%= flash[:message] %>
+    </span>
+  </div>
 <% end %>
 
 <div class="alert alert-warning">
   <p class="lead">
     Wrong Guesses:
-    <span class="guesses"><%= @game.wrong_guesses %></span>
+    <span class="guesses">
+      <%= @game.wrong_guesses %>
+    </span>
   </p>
 </div>
 
 <p class="alert alert-success">
   Word so far:
-  <span class="word"><%= @game.word_with_guesses %></span>
+  <span class="word">
+    <%= @game.word_with_guesses %>
+  </span>
 </p>
 
 <form action="/guess" method="post">
