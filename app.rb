@@ -61,6 +61,9 @@ class HangpersonApp < Sinatra::Base
   # Notice that the show.erb template expects to use the instance variables
   # wrong_guesses and word_with_guesses from @game.
   get '/show' do
+    # if no game word has been set redirect to root page
+    redirect '/' if @game.word.nil? || @game.word.empty?
+    
     # Confirm current saved state of game. win, lose or play.
     case @game.check_win_or_lose
     when :win
